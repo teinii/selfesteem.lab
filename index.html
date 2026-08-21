@@ -983,6 +983,54 @@
       max-width: none;
     }
   }
+  @media (min-width: 861px) and (prefers-reduced-motion: reduce) {
+    .philo-progress {
+      display: none;
+    }
+    .philo-items {
+      gap: var(--sp-16);
+    }
+    .philo-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      grid-template-rows: auto auto;
+      align-items: center;
+      column-gap: var(--sp-12);
+      border-top: 2px solid var(--line-strong);
+      padding-top: var(--sp-8);
+    }
+    .philo-item .num {
+      grid-column: 1;
+      grid-row: 1;
+      justify-self: start;
+    }
+    .philo-item p {
+      grid-column: 1;
+      grid-row: 2;
+      max-width: 52ch;
+    }
+    .philo-item::before {
+      content: "01";
+      grid-column: 2;
+      grid-row: 1 / 3;
+      font-family: var(--font-label);
+      font-weight: 800;
+      font-size: clamp(4rem, 6vw, 7rem);
+      line-height: 1;
+      color: rgba(23, 31, 67, 0.15);
+      justify-self: end;
+      user-select: none;
+    }
+    .philo-item[data-i="1"]::before {
+      content: "02";
+    }
+    .philo-item[data-i="2"]::before {
+      content: "03";
+    }
+    .philo-item[data-i="3"]::before {
+      content: "04";
+    }
+  }
 
   /* ---------------------- programs ---------------------- */
 
