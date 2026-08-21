@@ -1242,42 +1242,42 @@
     }
   }
 
-  /* ---------------------- testimonials (stack) ---------------------- */
+  /* ---------------------- testimonials (grid) ---------------------- */
 
   .testimonials {
     background: var(--blush);
   }
   .tm-scroller {
-    height: 320vh;
-    position: relative;
+    height: auto;
   }
   .tm-sticky {
-    position: sticky;
-    top: 0;
-    min-height: 100svh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding-top: var(--nav-h);
-    box-sizing: border-box;
+    position: static;
+    min-height: auto;
   }
   .tm-stage {
-    position: relative;
-    height: 360px;
-    max-width: 620px;
+    position: static;
+    height: auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--sp-4);
+    max-width: none;
+  }
+  @media (max-width: 700px) {
+    .tm-stage {
+      grid-template-columns: 1fr;
+    }
   }
   .tm-card {
-    position: absolute;
-    inset: 0;
+    position: static;
+    transform: none !important;
+    opacity: 1 !important;
     background: var(--card);
     border-radius: 30px;
     padding: var(--sp-12);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    transform-origin: bottom left;
-    transition: transform 0.15s linear, opacity 0.15s linear,
-      box-shadow 0.3s var(--ease);
+    transition: box-shadow 0.3s var(--ease);
     box-shadow: 0 30px 60px -30px rgba(32, 29, 79, 0.35);
   }
   .tm-card:hover {
@@ -1313,28 +1313,6 @@
   }
   .tm-card .who span:last-child {
     color: var(--pink-deep);
-  }
-  @media (max-width: 700px), (prefers-reduced-motion: reduce) {
-    .tm-scroller {
-      height: auto;
-    }
-    .tm-sticky {
-      position: static;
-      min-height: auto;
-    }
-    .tm-stage {
-      position: static;
-      height: auto;
-      display: flex;
-      flex-direction: column;
-      gap: var(--sp-4);
-      max-width: none;
-    }
-    .tm-card {
-      position: static;
-      transform: none !important;
-      opacity: 1 !important;
-    }
   }
 
   /* ---------------------- contact (dark / navy) ---------------------- */
@@ -2607,40 +2585,6 @@
       });
     }
 
-    /* ---------- testimonial stack ---------- */
-    var tmScroller = document.getElementById("tmScroller");
-    var tmCards = document.querySelectorAll(".tm-card");
-    function updateTestimonials() {
-      if (!tmScroller) return;
-      var rect = tmScroller.getBoundingClientRect();
-      var total = rect.height - window.innerHeight;
-      var progressed = -rect.top;
-      var frac = total > 0 ? Math.min(Math.max(progressed / total, 0), 0.999) : 0;
-      var pos = frac * tmCards.length;
-      tmCards.forEach(function (card, i) {
-        var d = pos - i;
-        var sign = i % 2 === 0 ? -1 : 1;
-        if (d < 0) {
-          card.style.transform = "translateY(60px) rotate(0deg)";
-          card.style.opacity = "0";
-          card.style.zIndex = 10 + i;
-        } else if (d < 1) {
-          var t = d;
-          card.style.transform =
-            "translateY(" + (1 - t) * 60 + "px) rotate(" + sign * (1 - t) * 4 + "deg)";
-          card.style.opacity = String(t < 0.15 ? t / 0.15 : 1);
-          card.style.zIndex = 20 + i;
-        } else {
-          var back = d - 1;
-          var peek = Math.max(1 - back * 2.2, 0);
-          card.style.transform =
-            "translateY(" + -14 - peek * 4 + "px) scale(" + (0.94 + peek * 0.03) + ") rotate(" + sign * (6 + peek * 2) + "deg)";
-          card.style.opacity = String(peek * 0.5);
-          card.style.zIndex = 10 + i;
-        }
-      });
-    }
-
     /* ---------- rAF-throttled scroll pipeline ---------- */
     var ticking = false;
     function onScroll() {
@@ -2648,7 +2592,6 @@
       if (!reduced) {
         updatePhilosophy();
         updateTimeline();
-        updateTestimonials();
       } else {
         philoItems.forEach(function (el) {
           el.classList.add("active");
