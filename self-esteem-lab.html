@@ -977,6 +977,12 @@
       transform: none;
     }
   }
+  @media (max-width: 640px) {
+    .philo-item p {
+      font-size: var(--fs-base);
+      max-width: none;
+    }
+  }
 
   /* ---------------------- programs ---------------------- */
 
@@ -1239,6 +1245,9 @@
       max-width: 240px;
       aspect-ratio: 1 / 1;
       margin: 0 auto;
+    }
+    .profile-photo img {
+      object-position: center 12%;
     }
   }
 
