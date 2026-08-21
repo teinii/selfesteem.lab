@@ -1870,13 +1870,7 @@
         </div>
 
         <div class="map-box reveal" style="--d:1">
-          <iframe
-            class="map-frame"
-            src="https://www.openstreetmap.org/export/embed.html?bbox=127.0946819%2C37.2017234%2C127.1026819%2C37.2077234&amp;layer=mapnik&amp;marker=37.2047234%2C127.0986819"
-            title="자존감 연구소 위치 지도"
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-          ></iframe>
+          <div id="kakaoMap" class="map-frame" role="img" aria-label="자존감 연구소 위치 지도"></div>
           <a
             class="map-fallback tag-pill on-dark"
             href="https://pcmap.place.naver.com/place/2059587722/home"
@@ -1914,6 +1908,10 @@
   </div>
 </footer>
 
+<script
+  type="text/javascript"
+  src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3ce42e8558ada4179df0a49d4a1cf510&libraries=services"
+></script>
 <script>
   (function () {
     "use strict";
@@ -1969,6 +1967,32 @@
       document.addEventListener("mouseleave", function () {
         cursorGlow.classList.remove("is-active");
       });
+    }
+
+    /* ---------- kakao map ---------- */
+    var mapEl = document.getElementById("kakaoMap");
+    if (mapEl && window.kakao && window.kakao.maps) {
+      var fallbackCenter = new kakao.maps.LatLng(37.2047234, 127.0986819);
+      var map = new kakao.maps.Map(mapEl, {
+        center: fallbackCenter,
+        level: 3,
+      });
+      map.setZoomable(false);
+      var marker = new kakao.maps.Marker({ map: map, position: fallbackCenter });
+
+      if (kakao.maps.services) {
+        var geocoder = new kakao.maps.services.Geocoder();
+        geocoder.addressSearch(
+          "경기 화성시 동탄구 동탄대로 677-5",
+          function (result, status) {
+            if (status === kakao.maps.services.Status.OK && result[0]) {
+              var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+              map.setCenter(coords);
+              marker.setPosition(coords);
+            }
+          }
+        );
+      }
     }
 
     /* ---------- generic reveal-on-scroll ---------- */
