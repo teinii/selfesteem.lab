@@ -1,0 +1,7 @@
+node_modules/
+.vercel
+.env
+.env.local
+주요정보.txt
+
+.vercel
