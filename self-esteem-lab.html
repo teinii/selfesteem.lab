@@ -48,7 +48,7 @@
     --font-body: "Gowun Dodum", "Gothic A1", sans-serif;
     --font-label: "Gothic A1", sans-serif;
 
-    --fs-2xs: 0.72rem;
+    --fs-2xs: 0.75rem;
     --fs-xs: 0.82rem;
     --fs-sm: 0.9375rem;
     --fs-base: 1.0625rem;
@@ -226,14 +226,17 @@
     right: 0;
     z-index: 50;
     padding: var(--sp-4) 0;
-    background: rgba(255, 248, 242, 0);
+    background: rgba(255, 248, 242, 0.98);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(32, 29, 79, 0);
     transition: background 0.4s var(--ease), border-color 0.4s var(--ease),
       padding 0.4s var(--ease);
   }
   header.nav.scrolled {
-    background: rgba(255, 248, 242, 0.92);
+    background: rgba(255, 248, 242, 0.98);
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--line);
     padding: var(--sp-3) 0;
   }
@@ -339,7 +342,7 @@
   @media (max-width: 620px) {
     .nav-row .btn {
       padding: 0.7em 1.2em;
-      font-size: 0.72rem;
+      font-size: 0.75rem;
     }
   }
   .btn:hover {
