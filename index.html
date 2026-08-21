@@ -48,7 +48,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link
-  href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&family=Gothic+A1:wght@500;700;800&display=swap"
+  href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&family=Gothic+A1:wght@500;700&family=Noto+Sans+KR:wght@500;700&display=swap"
   rel="stylesheet"
 />
 
@@ -90,7 +90,7 @@
 
     --font-display: "Jua", "Gothic A1", sans-serif;
     --font-body: "Gowun Dodum", "Gothic A1", sans-serif;
-    --font-label: "Gothic A1", sans-serif;
+    --font-label: "Noto Sans KR", "Gothic A1", sans-serif;
 
     --fs-2xs: 0.75rem;
     --fs-xs: 0.82rem;
@@ -325,8 +325,11 @@
     gap: var(--sp-6);
   }
   .brand {
-    font-family: var(--font-display);
+    font-family: var(--font-label);
+    font-weight: 700;
     font-size: 1.55rem;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
     display: flex;
     align-items: center;
     gap: 0.6em;
@@ -365,7 +368,7 @@
     padding: 0;
     font-size: var(--fs-sm);
     font-family: var(--font-label);
-    font-weight: 700;
+    font-weight: 600;
   }
   .nav-links a {
     text-decoration: none;
@@ -399,8 +402,9 @@
 
   .btn {
     font-family: var(--font-label);
-    font-weight: 800;
+    font-weight: 700;
     font-size: var(--fs-xs);
+    letter-spacing: -0.01em;
     display: inline-flex;
     align-items: center;
     gap: 0.6em;
@@ -1390,6 +1394,100 @@
     }
   }
 
+  .contact-form-wrap {
+    margin-top: var(--sp-16);
+    padding-top: var(--sp-16);
+    border-top: 1px solid var(--deep-line);
+  }
+  .contact-form-head h3 {
+    color: var(--deep-fg);
+    font-size: var(--fs-lg);
+    margin-top: var(--sp-3);
+  }
+  .contact-form-head p {
+    margin-top: var(--sp-3);
+    color: var(--deep-fg-soft);
+    max-width: 48ch;
+  }
+  .contact-form {
+    margin-top: var(--sp-8);
+    display: grid;
+    gap: var(--sp-4);
+    max-width: 640px;
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-4);
+  }
+  .form-field {
+    display: grid;
+    gap: var(--sp-2);
+    font-family: var(--font-label);
+    font-size: var(--fs-2xs);
+    font-weight: 700;
+    color: var(--deep-fg-soft);
+  }
+  .form-field[hidden] {
+    display: none;
+  }
+  .form-field input,
+  .form-field select,
+  .form-field textarea {
+    font-family: var(--font-body);
+    font-size: var(--fs-sm);
+    color: var(--deep-fg);
+    background: var(--deep-2);
+    border: 1px solid var(--deep-line);
+    border-radius: 14px;
+    padding: 0.85em 1em;
+    resize: vertical;
+    transition: border-color 0.3s var(--ease);
+  }
+  .form-field select {
+    appearance: none;
+    background-image: linear-gradient(45deg, transparent 50%, var(--deep-fg-soft) 50%),
+      linear-gradient(135deg, var(--deep-fg-soft) 50%, transparent 50%);
+    background-position: calc(100% - 1.3em) center, calc(100% - 1em) center;
+    background-size: 6px 6px, 6px 6px;
+    background-repeat: no-repeat;
+  }
+  .form-field textarea {
+    min-height: 8.5em;
+  }
+  .form-field input:focus,
+  .form-field select:focus,
+  .form-field textarea:focus {
+    border-color: var(--pink);
+  }
+  .hp-field {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    opacity: 0;
+  }
+  .contact-form .btn {
+    justify-self: start;
+  }
+  .form-status {
+    margin: 0;
+    font-size: var(--fs-sm);
+    min-height: 1.5em;
+  }
+  .form-status.is-error {
+    color: #ffb4b4;
+  }
+  .form-status.is-ok {
+    color: #b9f0c4;
+  }
+  @media (max-width: 620px) {
+    .form-row {
+      grid-template-columns: 1fr;
+    }
+  }
+
   footer {
     background: var(--deep);
     color: var(--deep-fg-soft);
@@ -1940,6 +2038,74 @@
           </div>
         </div>
       </div>
+
+      <div class="contact-form-wrap reveal" style="--d:2">
+        <div class="contact-form-head">
+          <p class="tag-pill on-dark">메일 문의</p>
+          <h3>전화가 어려우시면, 메일로 먼저 남겨주세요</h3>
+          <p>
+            이름과 연락처를 남겨주시면 확인 후 빠르게 답변드립니다. 급하신
+            경우 전화로 문의해주세요.
+          </p>
+        </div>
+        <form id="contactForm" class="contact-form" novalidate>
+          <label class="form-field">
+            <span>문의 유형</span>
+            <select name="type" id="contactType">
+              <option value="상담">상담 문의</option>
+              <option value="강의">강의 문의</option>
+              <option value="기타">기타 문의</option>
+            </select>
+          </label>
+          <div class="form-row">
+            <label class="form-field">
+              <span>이름</span>
+              <input type="text" name="name" maxlength="50" autocomplete="name" required />
+            </label>
+            <label class="form-field">
+              <span>연락처</span>
+              <input
+                type="text"
+                name="contact"
+                maxlength="80"
+                placeholder="전화번호 또는 이메일"
+                autocomplete="tel"
+                required
+              />
+            </label>
+          </div>
+          <label class="form-field" id="methodField">
+            <span>희망 상담방식</span>
+            <select name="method">
+              <option value="">선택 안 함</option>
+              <option value="대면">대면</option>
+              <option value="화상">화상</option>
+              <option value="전화">전화</option>
+            </select>
+          </label>
+          <label class="form-field" id="lectureField" hidden>
+            <span>관심 강의</span>
+            <input
+              type="text"
+              name="lecture"
+              maxlength="80"
+              placeholder="예: 자존감 회복 워크숍"
+            />
+          </label>
+          <label class="form-field">
+            <span>문의내용</span>
+            <textarea name="message" maxlength="2000" rows="4" required></textarea>
+          </label>
+          <div class="hp-field" aria-hidden="true">
+            <label
+              >웹사이트
+              <input type="text" name="website" tabindex="-1" autocomplete="off"
+            /></label>
+          </div>
+          <button type="submit" class="btn btn-accent">메일로 문의하기</button>
+          <p class="form-status" id="contactFormStatus" role="status" aria-live="polite"></p>
+        </form>
+      </div>
     </div>
   </section>
 </main>
@@ -2062,6 +2228,75 @@
           }
         );
       }
+    }
+
+    /* ---------- contact form (email inquiry) ---------- */
+    var contactForm = document.getElementById("contactForm");
+    if (contactForm) {
+      var contactStatus = document.getElementById("contactFormStatus");
+      var contactSubmitBtn = contactForm.querySelector('button[type="submit"]');
+      var contactTypeSelect = document.getElementById("contactType");
+      var methodField = document.getElementById("methodField");
+      var lectureField = document.getElementById("lectureField");
+      var syncContactFields = function () {
+        var isLecture = contactTypeSelect.value === "강의";
+        methodField.hidden = isLecture;
+        lectureField.hidden = !isLecture;
+      };
+      if (contactTypeSelect) {
+        contactTypeSelect.addEventListener("change", syncContactFields);
+        syncContactFields();
+      }
+      contactForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var formData = new FormData(contactForm);
+        var payload = {
+          type: (formData.get("type") || "").toString().trim(),
+          name: (formData.get("name") || "").toString().trim(),
+          contact: (formData.get("contact") || "").toString().trim(),
+          method: (formData.get("method") || "").toString().trim(),
+          lecture: (formData.get("lecture") || "").toString().trim(),
+          message: (formData.get("message") || "").toString().trim(),
+          website: (formData.get("website") || "").toString().trim(),
+        };
+        if (!payload.name || !payload.contact || !payload.message) {
+          contactStatus.textContent = "이름, 연락처, 문의내용을 입력해주세요.";
+          contactStatus.className = "form-status is-error";
+          return;
+        }
+        contactSubmitBtn.disabled = true;
+        contactStatus.textContent = "전송 중입니다...";
+        contactStatus.className = "form-status";
+        fetch("/api/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        })
+          .then(function (r) {
+            return r.json().then(function (data) {
+              return { ok: r.ok, data: data };
+            });
+          })
+          .then(function (result) {
+            if (result.ok && result.data && result.data.ok) {
+              contactStatus.textContent = "문의가 접수되었습니다. 빠르게 답변드릴게요!";
+              contactStatus.className = "form-status is-ok";
+              contactForm.reset();
+            } else {
+              contactStatus.textContent =
+                (result.data && result.data.error) ||
+                "전송에 실패했습니다. 전화로 문의해주세요.";
+              contactStatus.className = "form-status is-error";
+            }
+          })
+          .catch(function () {
+            contactStatus.textContent = "전송에 실패했습니다. 전화로 문의해주세요.";
+            contactStatus.className = "form-status is-error";
+          })
+          .finally(function () {
+            contactSubmitBtn.disabled = false;
+          });
+      });
     }
 
     /* ---------- generic reveal-on-scroll ---------- */

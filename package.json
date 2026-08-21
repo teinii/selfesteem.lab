@@ -1,0 +1,9 @@
+{
+  "name": "selfesteem-lab",
+  "private": true,
+  "version": "1.0.0",
+  "description": "자존감 연구소 랜딩페이지 + 메일 문의 API",
+  "dependencies": {
+    "nodemailer": "^6.9.14"
+  }
+}
