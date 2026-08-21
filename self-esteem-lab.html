@@ -179,20 +179,20 @@
 
   .cursor-glow {
     position: fixed;
-    top: -220px;
-    left: -220px;
-    width: 440px;
-    height: 440px;
+    top: -240px;
+    left: -240px;
+    width: 480px;
+    height: 480px;
     border-radius: 50%;
     background: radial-gradient(
       circle,
-      rgba(239, 124, 155, 0.22),
-      rgba(61, 79, 224, 0.12) 55%,
+      rgba(239, 124, 155, 0.32),
+      rgba(61, 79, 224, 0.18) 55%,
       transparent 75%
     );
-    filter: blur(30px);
+    filter: blur(26px);
     pointer-events: none;
-    z-index: 1;
+    z-index: 5;
     opacity: 0;
     transform: translate3d(var(--cx, 50vw), var(--cy, 50vh), 0);
     transition: transform 0.15s ease-out, opacity 0.4s var(--ease);
@@ -201,7 +201,7 @@
   .cursor-glow.is-active {
     opacity: 1;
   }
-  @media (max-width: 820px), (prefers-reduced-motion: reduce), (pointer: coarse) {
+  @media (prefers-reduced-motion: reduce), (pointer: coarse) {
     .cursor-glow {
       display: none;
     }
@@ -1326,11 +1326,17 @@
     display: block;
     filter: grayscale(0.2) contrast(1.05);
   }
-  .map-fallback {
+  .map-links {
     position: absolute;
     right: var(--sp-4);
     bottom: var(--sp-4);
     z-index: 2;
+    display: flex;
+    gap: var(--sp-2);
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  .map-links a {
     backdrop-filter: blur(6px);
   }
   @media (max-width: 820px) {
@@ -1871,12 +1877,21 @@
 
         <div class="map-box reveal" style="--d:1">
           <div id="kakaoMap" class="map-frame" role="img" aria-label="자존감 연구소 위치 지도"></div>
-          <a
-            class="map-fallback tag-pill on-dark"
-            href="https://pcmap.place.naver.com/place/2059587722/home"
-            target="_blank"
-            rel="noopener"
-          >네이버 지도에서 보기 →</a>
+          <div class="map-links">
+            <a
+              id="kakaoDirectionsLink"
+              class="tag-pill on-dark"
+              href="https://map.kakao.com/link/to/자존감연구소,37.2047234,127.0986819"
+              target="_blank"
+              rel="noopener"
+            >카카오맵 길찾기 →</a>
+            <a
+              class="tag-pill on-dark"
+              href="https://pcmap.place.naver.com/place/2059587722/home"
+              target="_blank"
+              rel="noopener"
+            >네이버 지도에서 보기 →</a>
+          </div>
         </div>
       </div>
     </div>
@@ -1989,6 +2004,14 @@
               var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
               map.setCenter(coords);
               marker.setPosition(coords);
+              var dirLink = document.getElementById("kakaoDirectionsLink");
+              if (dirLink) {
+                dirLink.href =
+                  "https://map.kakao.com/link/to/자존감연구소," +
+                  result[0].y +
+                  "," +
+                  result[0].x;
+              }
             }
           }
         );
