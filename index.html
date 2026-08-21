@@ -1314,30 +1314,29 @@
   .map-box {
     border: 1px solid var(--deep-line);
     border-radius: 30px;
-    aspect-ratio: 4/3;
     position: relative;
     overflow: hidden;
     background: var(--deep-2);
+    display: flex;
+    flex-direction: column;
   }
   .map-frame {
     width: 100%;
-    height: 100%;
+    aspect-ratio: 4/3;
     border: 0;
     display: block;
     filter: grayscale(0.2) contrast(1.05);
   }
   .map-links {
-    position: absolute;
-    right: var(--sp-4);
-    bottom: var(--sp-4);
-    z-index: 2;
     display: flex;
-    gap: var(--sp-2);
+    gap: var(--sp-3);
     flex-wrap: wrap;
-    justify-content: flex-end;
+    padding: var(--sp-4);
   }
   .map-links a {
-    backdrop-filter: blur(6px);
+    flex: 1 1 auto;
+    justify-content: center;
+    text-align: center;
   }
   @media (max-width: 820px) {
     .contact-grid {
@@ -1880,13 +1879,13 @@
           <div class="map-links">
             <a
               id="kakaoDirectionsLink"
-              class="tag-pill on-dark"
+              class="btn btn-ghost-dark"
               href="https://map.kakao.com/link/to/자존감연구소,37.2047234,127.0986819"
               target="_blank"
               rel="noopener"
             >카카오맵 길찾기 →</a>
             <a
-              class="tag-pill on-dark"
+              class="btn btn-ghost-dark"
               href="https://pcmap.place.naver.com/place/2059587722/home"
               target="_blank"
               rel="noopener"
