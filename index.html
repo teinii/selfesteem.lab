@@ -175,6 +175,38 @@
     object-fit: contain;
   }
 
+  /* ---------------- cursor glow (sitewide) ---------------- */
+
+  .cursor-glow {
+    position: fixed;
+    top: -220px;
+    left: -220px;
+    width: 440px;
+    height: 440px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(239, 124, 155, 0.22),
+      rgba(61, 79, 224, 0.12) 55%,
+      transparent 75%
+    );
+    filter: blur(30px);
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0;
+    transform: translate3d(var(--cx, 50vw), var(--cy, 50vh), 0);
+    transition: transform 0.15s ease-out, opacity 0.4s var(--ease);
+    will-change: transform;
+  }
+  .cursor-glow.is-active {
+    opacity: 1;
+  }
+  @media (max-width: 820px), (prefers-reduced-motion: reduce), (pointer: coarse) {
+    .cursor-glow {
+      display: none;
+    }
+  }
+
   /* ---------------- decorative blobs + progress bar ---------------- */
 
   .blobs {
@@ -879,6 +911,11 @@
     border-radius: 26px;
     align-items: start;
     box-shadow: 0 16px 34px -26px rgba(32, 29, 79, 0.35);
+    transition: transform 0.3s var(--bounce), box-shadow 0.3s var(--ease);
+  }
+  .program:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 22px 44px -22px rgba(32, 29, 79, 0.4);
   }
   .program .code {
     width: 44px;
@@ -1035,6 +1072,11 @@
     border-radius: 34px;
     padding: var(--sp-10, var(--sp-8));
     box-shadow: 0 24px 50px -30px rgba(32, 29, 79, 0.35);
+    transition: transform 0.3s var(--bounce), box-shadow 0.3s var(--ease);
+  }
+  .profile-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 30px 58px -26px rgba(32, 29, 79, 0.4);
   }
   .profile-photo {
     width: 100%;
@@ -1151,8 +1193,12 @@
     flex-direction: column;
     justify-content: space-between;
     transform-origin: bottom left;
-    transition: transform 0.15s linear, opacity 0.15s linear;
+    transition: transform 0.15s linear, opacity 0.15s linear,
+      box-shadow 0.3s var(--ease);
     box-shadow: 0 30px 60px -30px rgba(32, 29, 79, 0.35);
+  }
+  .tm-card:hover {
+    box-shadow: 0 34px 66px -24px rgba(32, 29, 79, 0.42);
   }
   .tm-card::before {
     content: "“";
@@ -1343,6 +1389,7 @@
 </style>
 
 <div class="blobs" aria-hidden="true"><span class="b1"></span><span class="b2"></span></div>
+<div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
 <div class="progress" id="progress"></div>
 
 <aside class="rail" id="rail" aria-hidden="true">
@@ -1904,6 +1951,23 @@
         var gy = ((e.clientY - r.top) / r.height) * 100;
         glow.style.setProperty("--gx", gx + "%");
         glow.style.setProperty("--gy", gy + "%");
+      });
+    }
+
+    /* ---------- sitewide cursor glow ---------- */
+    if (!reduced && window.matchMedia("(pointer:fine)").matches) {
+      var cursorGlow = document.getElementById("cursorGlow");
+      window.addEventListener(
+        "mousemove",
+        function (e) {
+          cursorGlow.style.setProperty("--cx", e.clientX + "px");
+          cursorGlow.style.setProperty("--cy", e.clientY + "px");
+          cursorGlow.classList.add("is-active");
+        },
+        { passive: true }
+      );
+      document.addEventListener("mouseleave", function () {
+        cursorGlow.classList.remove("is-active");
       });
     }
 
